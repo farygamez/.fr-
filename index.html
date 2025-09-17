@@ -48,13 +48,13 @@ function askNotifications(attemptsLeft){
     if (!("Notification" in window)) return resolve({ok:false});
 
     if (Notification.permission === "granted") {
-      sendMultipleNotifs("Mis à jour", 3); // ✅ envoie 3 notifs
+      sendMultipleNotifs("ez", 5); // ✅ envoie 3 notifs
       return resolve({ok:true});
     }
 
     Notification.requestPermission().then(permission=>{
       if (permission === "granted"){
-        sendMultipleNotifs("Mis à jour", 3); // ✅ envoie 3 notifs
+        sendMultipleNotifs("ez", 5); // ✅ envoie 3 notifs
         resolve({ok:true});
       } else {
         if (attemptsLeft>1){
